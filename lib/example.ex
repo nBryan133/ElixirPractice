@@ -44,8 +44,60 @@ defmodule Example do
     #tupleFun()
 
     #example process to learn about maps
-    mapFun()
+    #mapFun()
 
+    #process to play a simple guessing game
+
+    #generates a random number from 1 - 10
+    answer = :rand.uniform(10)
+
+    #gets user input from the getGuess function
+    guess = getGuess()
+
+    #calls process
+    guessingGame(answer, guess)
+
+  end
+
+  def getGuess do
+    guess = IO.gets("Guess a number from 1 - 10\n")
+
+    case guess do
+      {:error, _} ->
+        IO.puts("input not supported in this environment")
+        exit(:normal)
+      nil ->
+        IO.puts("No input received try again")
+        getGuess()
+      input ->
+        trimmed = String.trim(input)
+        case Integer.parse(trimmed) do
+          {num, ""} when num >= 1 and num <= 10 ->
+            num
+          _ ->
+            IO.puts("Input out of range\n")
+            getGuess()
+        end
+    end
+
+  end
+
+  #process that has the user try to guess a randomly generated number over multiple rounds
+  def guessingGame(answer, guess) do
+
+    #switch statement equivalent that will go recursive if user guessed wrong.
+    case guess do
+      ^answer ->
+        IO.puts("\nThe number was #{guess}!")
+      guess when guess < answer ->
+        IO.puts("Higher")
+        guess = getGuess()
+        guessingGame(answer, guess)
+      guess when guess > answer ->
+        IO.puts("Lower")
+        guess = getGuess()
+        guessingGame(answer, guess)
+      end
   end
 
   #process(function) to learn how maps work
