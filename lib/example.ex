@@ -59,22 +59,42 @@ defmodule Example do
 
   end
 
+  #process to get a guess that is within a set of rules
   def getGuess do
+    # prompts a user to input a guess for what the number is
     guess = IO.gets("Guess a number from 1 - 10\n")
 
+    #checks whether the user input is valid and whether the environment the program
+    #is running is allows this kind of operation
     case guess do
+
+      #if an error is thrown
       {:error, _} ->
         IO.puts("input not supported in this environment")
         exit(:normal)
+
+      #if the program recieved no input whatsoever
       nil ->
         IO.puts("No input received try again")
         getGuess()
+
+      #if input was recieved
       input ->
+        #trims the input of all leading and trailing whitespaces in the input
         trimmed = String.trim(input)
+
+        #checks if the trimmed input, when converted into an
+        #integer, is within the range 1-10
         case Integer.parse(trimmed) do
+
+          #when the number is within the range
           {num, ""} when num >= 1 and num <= 10 ->
+            #return the number
             num
+
+          #if number is not within that range
           _ ->
+            #tell user input is out of range then recurse
             IO.puts("Input out of range\n")
             getGuess()
         end
@@ -87,16 +107,28 @@ defmodule Example do
 
     #switch statement equivalent that will go recursive if user guessed wrong.
     case guess do
+
+      #if guess is the same as the answer
       ^answer ->
+
+        #tell user they got the right number then end process
         IO.puts("\nThe number was #{guess}!")
+        :ok
+
+      #if the guess is less than the answer
       guess when guess < answer ->
-        IO.puts("Higher")
-        guess = getGuess()
-        guessingGame(answer, guess)
+
+        IO.puts("Higher")   #tell user that they need to go higher
+        guess = getGuess()  #get new guess
+        guessingGame(answer, guess) #recurse process passing new guess
+
+      #if the guess is greater than the answer
       guess when guess > answer ->
-        IO.puts("Lower")
-        guess = getGuess()
-        guessingGame(answer, guess)
+
+        IO.puts("Lower")    #tell the user they need to go lower
+        guess = getGuess()  #get new guess
+        guessingGame(answer, guess) #recurs process passing new guess
+
       end
   end
 
