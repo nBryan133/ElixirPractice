@@ -17,19 +17,19 @@ defmodule Example do
 
   #function
   def main do
-    #strings atoms and comparators
+  #strings atoms and comparators
     #declaring variables
     #name = "Nate"
     #status = Enum.random([:Gold, :Silver, :Bronze, :"no status"])
 
-    #switch statement
+  #switch statement
     #case status do
     #  :Gold -> IO.puts("Welcome to the fancy lounge, #{name}!")
     #  :"no status" -> IO.puts("Members only beyond this point")
     #  _ -> IO.puts("#{status} status members not permitted please upgrade status to continue.")
     #end
 
-    #date and time variables (compound variable examples)
+  #date and time variables (compound variable examples)
     #time = Time.new!(16, 30, 0, 0)
     #date = Date.new!(2025, 1, 1)
     #date_time = DateTime.new!(date, time, "Etc/UTC")
@@ -37,25 +37,59 @@ defmodule Example do
     #IO.puts(date_time.year)
     #IO.inspect(date_time)
 
-    #example process to tell how much time till new year
+  #example process to tell how much time till new year
     #timeTillNY()
 
-    #example process to learn about tuples
+  #example process to learn about tuples
     #tupleFun()
 
-    #example process to learn about maps
+  #example process to learn about maps
     #mapFun()
 
-    #process to play a simple guessing game
-
+  #process to play a simple guessing game
     #generates a random number from 1 - 10
-    answer = :rand.uniform(10)
+    #answer = :rand.uniform(10)
 
     #gets user input from the getGuess function
-    guess = getGuess()
+    #guess = getGuess()
 
     #calls process
-    guessingGame(answer, guess)
+    #guessingGame(answer, guess)
+
+  #messing with lists
+    listFun()
+
+  end
+
+  #process for messing with lists
+  def listFun do
+    #init a list called grades
+    grades = [25, 50, 75, 100]
+
+    IO.puts("List of grades:")
+    #iterate through and print contents of list to Terminal
+    for n <- grades, do: IO.puts(n)
+    IO.puts("\nNew list of grades:")
+
+    #generates new list by adding 5 to each of grades values then prints it
+    new = for n <- grades, do: n + 5
+    for n <- new, do: IO.puts(n)
+
+    #appending new values to end of new List
+    IO.puts("\nNew list of grades:")
+    new = new ++ [125]
+    new = new ++ [150, 175]
+    for n <- new, do: IO.puts(n)
+
+    #making final list with new value at beginning followed by the contents of new list
+    IO.puts("\nFinal list of grades:")
+    final = [5 | new]
+    for n <- final, do: IO.puts(n)
+
+    #making list of even values in final list
+    IO.puts("\nEven values in list:")
+    even = for n <- final, rem(n, 2) == 0, do: n
+    for n <- even, do: IO.puts(n)
 
   end
 
